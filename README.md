@@ -13,14 +13,12 @@ This repository contains **Dockerfile** of [ElasticSearch](http://www.elasticsea
 
 1. Install [Docker](https://www.docker.io/).
 
-2. Download [trusted build](https://index.docker.io/u/dockerfile/elasticsearch/) from public [Docker Registry](https://index.docker.io/): `docker pull dockerfile/elasticsearch`
-
-   (alternatively, you can build an image from Dockerfile: `docker build -t="dockerfile/elasticsearch" github.com/dockerfile/elasticsearch`)
+2. Build an image from Dockerfile: `docker build -t="jbasdf/elasticsearch" github.com/jbasdf/elasticsearch`)
 
 
 ### Usage
 
-    docker run -d -p 9200:9200 -p 9300:9300 dockerfile/elasticsearch
+    docker run -d -p 9200:9200 -p 9300:9300 jbasdf/elasticsearch
 
 #### Attach persistent/shared directories
 
@@ -40,4 +38,18 @@ This repository contains **Dockerfile** of [ElasticSearch](http://www.elasticsea
     docker run -d -p 9200:9200 -p 9300:9300 -v <data-dir>:/data dockerfile/elasticsearch -Des.config=/data/elasticsearch.yml
     ```
 
+    Or run a named container without specifying ports if you are using nginx_es:
+    ```
+    docker run -d --name elasticsearch -v /data:/data dockerfile/elasticsearch
+    ```
+
 Open `http://<host>:9200` to see the result.
+
+
+### Troubleshooting:
+
+If you see this error:
+  Error: Conflict, The name elasticsearch is already assigned to 98edd9bdd309. You have to delete (or rename) that container to be able to assign elasticsearch to a container again.
+
+Be sure to remove the container before calling docker run:
+  docker rm elasticsearch
